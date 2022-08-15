@@ -1,11 +1,12 @@
 import { useCallback, useState } from "react";
 import api from "../services/api";
-import uuid from "react-native-uuid";
 
 export interface Note {
   id: string;
   title: string;
   content: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 const useNotes = () => {
@@ -23,8 +24,6 @@ const useNotes = () => {
 
       const newNote = {
         title,
-        id: uuid.v4(),
-        content: "",
       };
 
       const { data } = await api.post("/notes", newNote);

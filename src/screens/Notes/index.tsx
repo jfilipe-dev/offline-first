@@ -1,11 +1,18 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { Button, Flex, Heading, Input, useTheme, View } from "native-base";
-import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState,
+  useEffect,
+} from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { Modalize } from "react-native-modalize";
 import styles from "./styles";
 import NoteItem from "./components/NoteItem";
 import useNotes from "../../hooks/useNotes";
+import { database } from "../../database";
 
 const Notes: React.FC = () => {
   const { colors } = useTheme();
