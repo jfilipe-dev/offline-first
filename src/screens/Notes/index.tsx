@@ -29,6 +29,16 @@ const Notes: React.FC = () => {
     }, [getNotes])
   );
 
+  useEffect(() => {
+    async function loadNotes() {
+      const notesColeciton = database.get("notes");
+      const notes = await notesColeciton.query().fetch();
+      console.log("🚀 ~ file: index.tsx ~ line 43 ~ loadNotes ~ notes", notes);
+    }
+
+    loadNotes();
+  }, []);
+
   useLayoutEffect(() => {
     setOptions({
       headerRight: () => (
