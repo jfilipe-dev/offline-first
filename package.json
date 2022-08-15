@@ -10,10 +10,11 @@
     "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
-    "server": "json-server --watch ./server/db.json"
+    "server": "cd server && node server"
   },
   "dependencies": {
     "@nozbe/watermelondb": "^0.24.0",
+    "@react-native-community/netinfo": "8.2.0",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
     "axios": "^0.27.2",
