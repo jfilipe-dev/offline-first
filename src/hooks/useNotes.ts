@@ -2,14 +2,14 @@ import { useCallback, useState } from "react";
 import api from "../services/api";
 import uuid from "react-native-uuid";
 
-export interface Note {
+export interface InternNote {
   id: string;
   title: string;
   content: string;
 }
 
 const useNotes = () => {
-  const [notes, setNotes] = useState<Note[]>([]);
+  const [notes, setNotes] = useState<InternNote[]>([]);
 
   const getNotes = useCallback(async () => {
     const { data } = await api.get("/notes");
@@ -21,30 +21,27 @@ const useNotes = () => {
     async (title: string) => {
       if (!title) return;
 
-      const newNote = {
-        title,
-        id: uuid.v4(),
-        content: "",
-      };
-
-      const { data } = await api.post("/notes", newNote);
+      const { data } = await api.post("/notes", { title });
 
       setNotes([...notes, data]);
     },
     [notes]
   );
 
-  const updateNote = useCallback(async (note: Note) => {
+  const updateNote = useCallback(async (note: InternNote) => {
     await api.put(`/notes/${note.id}`, {
       ...note,
     });
   }, []);
 
   const deleteNote = useCallback(
-    async (id: string) => {
-      await api.delete(`/notes/${id}`);
+    async (note: InternNote) => {
+      await api.put(`/notes/${note.id}`, {
+        id: note.id,
+        deleted: true,
+      });
 
-      setNotes(notes.filter((note) => note.id !== id));
+      setNotes(notes.filter((item) => item.id !== note.id));
     },
     [notes]
   );

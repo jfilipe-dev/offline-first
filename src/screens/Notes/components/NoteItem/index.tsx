@@ -1,11 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 import { Button, Heading, View } from "native-base";
 import React from "react";
-import { Note } from "../../../../hooks/useNotes";
+import { InternNote } from "../../../../hooks/useNotes";
 
 interface Props {
-  data: Note;
-  onDelete: (id: string) => void;
+  data: InternNote;
+  onDelete: (note: InternNote) => void;
 }
 
 const NoteItem = ({ data, onDelete }: Props) => {
@@ -28,7 +28,7 @@ const NoteItem = ({ data, onDelete }: Props) => {
       <Button
         variant="link"
         colorScheme="danger"
-        onPress={() => onDelete(data.id)}
+        onPress={() => onDelete(data)}
       >
         Excluir
       </Button>
