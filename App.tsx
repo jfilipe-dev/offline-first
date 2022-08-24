@@ -1,8 +1,10 @@
 import "react-native-gesture-handler";
+import DatabaseProvider from "@nozbe/watermelondb/DatabaseProvider";
 import React from "react";
 import { NativeBaseProvider, theme } from "native-base";
 import { NavigationContainer } from "@react-navigation/native";
 import Routes from "./src/routes";
+import { database } from "./src/database";
 
 export default function App() {
   return (
@@ -20,7 +22,9 @@ export default function App() {
           },
         }}
       >
-        <Routes />
+        <DatabaseProvider database={database}>
+          <Routes />
+        </DatabaseProvider>
       </NavigationContainer>
     </NativeBaseProvider>
   );

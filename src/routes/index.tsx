@@ -1,4 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { StatusBar } from "expo-status-bar";
 import { Flex, Heading, useTheme } from "native-base";
 import React from "react";
 import ConnectionAlert from "../components/ConnectionAlert";
@@ -15,6 +16,7 @@ const Routes: React.FC = () => {
   );
   return (
     <>
+      <StatusBar backgroundColor={colors.info[600]} style="light" />
       <Navigator
         screenOptions={{
           headerBackVisible: false,

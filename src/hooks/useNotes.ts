@@ -1,49 +1,61 @@
-import { useCallback, useState } from "react";
-import api from "../services/api";
+import { useNetInfo } from "@react-native-community/netinfo";
+import { useCallback, useState, useEffect } from "react";
+import {
+  create,
+  get,
+  update,
+  sync,
+  remove,
+} from "../database/controllers/notesController";
+import { Note } from "../database/model/Note";
 
-export interface Note {
+export interface InternNote {
   id: string;
   title: string;
   content: string;
-  createdAt: string;
-  updatedAt: string;
 }
 
 const useNotes = () => {
   const [notes, setNotes] = useState<Note[]>([]);
+  const { isConnected } = useNetInfo();
 
   const getNotes = useCallback(async () => {
-    const { data } = await api.get("/notes");
-
-    setNotes(data);
-  }, []);
+    if (isConnected) {
+      sync().then(async () => {
+        const notes = await get();
+        setNotes(notes);
+      });
+    }
+  }, [isConnected]);
 
   const createNote = useCallback(
     async (title: string) => {
       if (!title) return;
 
-      const newNote = {
-        title,
-      };
+      const newNote = await create(title);
 
-      const { data } = await api.post("/notes", newNote);
-
-      setNotes([...notes, data]);
+      // setNotes([...notes, newNote]);
     },
     [notes]
   );
 
-  const updateNote = useCallback(async (note: Note) => {
-    await api.put(`/notes/${note.id}`, {
-      ...note,
-    });
+  const updateNote = useCallback(async (note: InternNote) => {
+    await update(note);
   }, []);
 
   const deleteNote = useCallback(
-    async (id: string) => {
-      await api.delete(`/notes/${id}`);
+    async (note: Note) => {
+      await remove(note.id);
+      // setNotes(notes.filter((item) => item.id !== note.id));
 
-      setNotes(notes.filter((note) => note.id !== id));
+      // await api.put(`/notes/${note.id}`, {
+      //   title: note.title,
+      //   content: note.content,
+      //   id: note.id,
+      //   deleted: true,
+      // });
+
+      // setNotes(notes.filter((item) => item.id !== note.id));
     },
     [notes]
   );

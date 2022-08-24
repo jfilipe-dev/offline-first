@@ -1,11 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 import { Button, Heading, View } from "native-base";
 import React from "react";
-import { Note } from "../../../../hooks/useNotes";
+import { Note } from "../../../../database/model/Note";
 
 interface Props {
   data: Note;
-  onDelete: (id: string) => void;
+  onDelete: (id: Note) => void;
 }
 
 const NoteItem = ({ data, onDelete }: Props) => {
@@ -28,7 +28,7 @@ const NoteItem = ({ data, onDelete }: Props) => {
       <Button
         variant="link"
         colorScheme="danger"
-        onPress={() => onDelete(data.id)}
+        onPress={() => onDelete(data)}
       >
         Excluir
       </Button>
@@ -36,7 +36,15 @@ const NoteItem = ({ data, onDelete }: Props) => {
       <Button
         variant="link"
         colorScheme="amber"
-        onPress={() => navigate("Note", { note: data })}
+        onPress={() =>
+          navigate("Note", {
+            note: {
+              content: data.content,
+              title: data.title,
+              id: data.id,
+            },
+          })
+        }
       >
         Editar
       </Button>

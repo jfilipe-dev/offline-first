@@ -1,9 +1,10 @@
-import { Note } from "../hooks/useNotes";
+import { Note } from "../database/model/Note";
+import { InternNote } from "../hooks/useNotes";
 
 export type AppStackParamList = {
   Notes: undefined;
   Note: {
-    note: Note;
+    note: InternNote;
   };
 };
 

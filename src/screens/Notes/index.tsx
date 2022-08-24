@@ -1,24 +1,23 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { Button, Flex, Heading, Input, useTheme, View } from "native-base";
-import React, {
-  useCallback,
-  useLayoutEffect,
-  useRef,
-  useState,
-  useEffect,
-} from "react";
+import { Button, Flex, Heading, Input, useTheme } from "native-base";
+import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { Modalize } from "react-native-modalize";
 import styles from "./styles";
 import NoteItem from "./components/NoteItem";
 import useNotes from "../../hooks/useNotes";
-import { database } from "../../database";
+import enhance from "./components/Observable";
+import { Note } from "../../database/model/Note";
 
-const Notes: React.FC = () => {
+interface Props {
+  notes: Note[];
+}
+
+const Notes = ({ notes }: Props) => {
   const { colors } = useTheme();
   const { setOptions } = useNavigation();
 
-  const { notes, createNote, getNotes, deleteNote } = useNotes();
+  const { createNote, getNotes, deleteNote } = useNotes();
 
   const [newNote, setNewNote] = useState("");
 
@@ -35,16 +34,6 @@ const Notes: React.FC = () => {
       getNotes();
     }, [getNotes])
   );
-
-  useEffect(() => {
-    async function loadNotes() {
-      const notesColeciton = database.get("notes");
-      const notes = await notesColeciton.query().fetch();
-      console.log("🚀 ~ file: index.tsx ~ line 43 ~ loadNotes ~ notes", notes);
-    }
-
-    loadNotes();
-  }, []);
 
   useLayoutEffect(() => {
     setOptions({
@@ -102,4 +91,4 @@ const Notes: React.FC = () => {
   );
 };
 
-export default Notes;
+export default enhance(Notes);

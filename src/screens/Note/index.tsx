@@ -19,7 +19,7 @@ const Note: React.FC = () => {
 
   const { note } = params;
 
-  const { content, title } = note;
+  const { content, title, id } = note;
 
   const [editedContent, setEditedContent] = useState(content);
 
@@ -34,7 +34,8 @@ const Note: React.FC = () => {
           onPress={() => {
             Keyboard.dismiss();
             updateNote({
-              ...note,
+              id,
+              title,
               content: editedContent,
             });
           }}
@@ -53,7 +54,7 @@ const Note: React.FC = () => {
         </Button>
       ),
     });
-  }, [updateNote, editedContent, note]);
+  }, [updateNote, editedContent, note, id, title]);
 
   return (
     <TextInput

@@ -2,7 +2,7 @@ import { appSchema } from "@nozbe/watermelondb";
 import { noteSchema } from "./noteSchema";
 
 const schemas = appSchema({
-  version: 1,
+  version: 5,
   tables: [noteSchema],
 });
 

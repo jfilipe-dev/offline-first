@@ -9,19 +9,30 @@ server.use(middlewares);
 
 server.use(jsonServer.bodyParser);
 server.post("/notes", (req, res, next) => {
-  req.body.id = uuidv4();
-  req.body.content = "";
+  req.body.id = req.body.id || uuidv4();
+  req.body.content = req.body.content || "";
+  req.body.deleted = false;
 
   next();
 });
 
-// server.get("/sync", (req, res, next) => {
-//   const db = router.db;
+server.get("/notes", (req, res, next) => {
+  const notes = db.get("notes").value();
+  const data = notes.filter((note) => !note.deleted);
 
-// get notes by updated_at
-//   const notes = db.get("notes").value();
-//   res.json(notes);
-// });
+  res.json(data);
+});
+
+server.get("/sync", (req, res, next) => {
+  const db = router.db;
+
+  const notes = db.get("notes").value();
+
+  const data = notes.filter((note) => !note.deleted);
+  const deleted = notes.filter((note) => note.deleted).map((note) => note.id);
+
+  res.json({ data, deleted });
+});
 
 server.use(router);
 
