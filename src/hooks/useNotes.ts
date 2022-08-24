@@ -1,6 +1,5 @@
 import { useCallback, useState } from "react";
 import api from "../services/api";
-import uuid from "react-native-uuid";
 
 export interface InternNote {
   id: string;

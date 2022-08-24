@@ -1,6 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Flex, Heading, useTheme } from "native-base";
 import React from "react";
+import { StatusBar } from "expo-status-bar";
 import ConnectionAlert from "../components/ConnectionAlert";
 import Note from "../screens/Note";
 import Notes from "../screens/Notes";
@@ -11,10 +12,11 @@ const Routes: React.FC = () => {
   const { colors } = useTheme();
 
   const HeaderBackground = () => (
-    <Flex flex={1} backgroundColor={colors.info[600]} />
+    <Flex flex={1} backgroundColor={colors.white} />
   );
   return (
     <>
+      <StatusBar backgroundColor={colors.white} style="dark" />
       <Navigator
         screenOptions={{
           headerBackVisible: false,
@@ -27,7 +29,7 @@ const Routes: React.FC = () => {
           options={{
             title: "",
             headerLeft: () => (
-              <Heading size="md" color="white">
+              <Heading size="md" color={colors.blueGray[700]}>
                 Minhas notas
               </Heading>
             ),

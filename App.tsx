@@ -11,11 +11,11 @@ export default function App() {
         theme={{
           dark: true,
           colors: {
-            background: theme.colors.trueGray[900],
+            background: theme.colors.gray[200],
             border: theme.colors.red[600],
             primary: theme.colors.trueGray[900],
             text: theme.colors.white,
-            card: theme.colors.info[600],
+            card: theme.colors.gray[100],
             notification: theme.colors.trueGray[900],
           },
         }}

@@ -13,23 +13,20 @@ const NoteItem = ({ data, onDelete }: Props) => {
 
   return (
     <View
-      backgroundColor="muted[700]"
+      backgroundColor="white"
       p={4}
+      shadow={0.5}
       borderRadius={6}
       flexDirection="row"
       alignItems="center"
       justifyContent="space-between"
       my="10px"
     >
-      <Heading size="sm" color="white" flex={1} mr={2}>
+      <Heading size="sm" color="blueGray[700]" flex={1} mr={2}>
         {data.title}
       </Heading>
 
-      <Button
-        variant="link"
-        colorScheme="danger"
-        onPress={() => onDelete(data)}
-      >
+      <Button variant="link" colorScheme="red" onPress={() => onDelete(data)}>
         Excluir
       </Button>
 

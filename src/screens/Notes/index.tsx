@@ -6,6 +6,7 @@ import { Modalize } from "react-native-modalize";
 import styles from "./styles";
 import NoteItem from "./components/NoteItem";
 import useNotes from "../../hooks/useNotes";
+import Empty from "./components/Empty";
 
 const Notes: React.FC = () => {
   const { colors } = useTheme();
@@ -43,7 +44,7 @@ const Notes: React.FC = () => {
     setOptions({
       headerRight: () => (
         <Button
-          colorScheme="amber"
+          colorScheme="tertiary"
           size="sm"
           onPress={() => modalizeRef.current?.open()}
         >
@@ -56,9 +57,13 @@ const Notes: React.FC = () => {
   return (
     <>
       <ScrollView contentContainerStyle={styles.container}>
-        {notes.map((note) => (
-          <NoteItem key={note.id} data={note} onDelete={deleteNote} />
-        ))}
+        {notes.length ? (
+          notes.map((note) => (
+            <NoteItem key={note.id} data={note} onDelete={deleteNote} />
+          ))
+        ) : (
+          <Empty />
+        )}
       </ScrollView>
 
       <Modalize
@@ -68,25 +73,28 @@ const Notes: React.FC = () => {
         keyboardAvoidingBehavior="padding"
         keyboardAvoidingOffset={80}
         modalStyle={{
-          backgroundColor: colors.muted[900],
+          backgroundColor: colors.gray[100],
         }}
       >
         <Flex p={10}>
-          <Heading size="md" color="white">
+          <Heading size="md" color={colors.blueGray[700]}>
             Criar nova nota
           </Heading>
           <Input
             size="lg"
             p={4}
             placeholder="Digite o título da nota"
-            bgColor={colors.muted[800]}
-            color="white"
+            bgColor={colors.gray[300]}
+            color={colors.blueGray[700]}
             variant="filled"
+            _focus={{
+              borderColor: colors.blueGray[700],
+            }}
             mt={7}
             value={newNote}
             onChangeText={setNewNote}
           />
-          <Button colorScheme="amber" onPress={handleCreateNote} mt={5}>
+          <Button colorScheme="tertiary" onPress={handleCreateNote} mt={5}>
             Adicionar
           </Button>
         </Flex>

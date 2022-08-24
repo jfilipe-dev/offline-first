@@ -29,7 +29,7 @@ const Note: React.FC = () => {
     setOptions({
       headerRight: () => (
         <Button
-          colorScheme="amber"
+          colorScheme="tertiary"
           size="sm"
           onPress={() => {
             Keyboard.dismiss();
@@ -43,12 +43,17 @@ const Note: React.FC = () => {
         </Button>
       ),
       headerTitle: () => (
-        <Heading size="sm" color="white">
+        <Heading size="sm" color="blueGray[700]">
           {title}
         </Heading>
       ),
       headerLeft: () => (
-        <Button colorScheme="white" size="sm" onPress={goBack}>
+        <Button
+          colorScheme="tertiary"
+          variant="link"
+          size="sm"
+          onPress={goBack}
+        >
           Voltar
         </Button>
       ),
@@ -57,7 +62,10 @@ const Note: React.FC = () => {
 
   return (
     <TextInput
-      style={[styles.textarea, { paddingBottom: height }]}
+      style={[
+        styles.textarea,
+        { paddingBottom: height, color: colors.blueGray[700] },
+      ]}
       placeholder="Digite a nota"
       placeholderTextColor={colors.gray[500]}
       multiline
