@@ -36,7 +36,15 @@ const NoteItem = ({ data, onDelete }: Props) => {
       <Button
         variant="link"
         colorScheme="amber"
-        onPress={() => navigate("Note", { note: data })}
+        onPress={() =>
+          navigate("Note", {
+            note: {
+              content: data.content,
+              title: data.title,
+              id: data.id,
+            },
+          })
+        }
       >
         Editar
       </Button>
